@@ -4,9 +4,9 @@
   "version": "0.3.2",
   "tag": "v0.3.2",
   "asset": "dsh-startup-yomi-0.3.2.tgz",
-  "size": 565423,
-  "sha256": "ffb6b7ec2503dc9e18f7718c6a4beef28ba4535bd026c59a267deb74db50c3a3",
-  "sha512": "fddb12fc3096aba09e3872a9dec84f38a2fb11ececaaf22e3338188b9180adbfbff7fced43152357af4a1ec5a8a54aaba96d13b3b4c6786fdaa5b7115ec950ef",
+  "size": 565458,
+  "sha256": "f81b17d22b28e2e162608fcff8dba242d354af66c23c66a500b0a884eb268760",
+  "sha512": "4821bc397bb3354fa4f2a268a51d1c5ed364d847b3fd25952a4e92ca7df44d74ae4006a781582f1a0f2758a0baada78952bc02b86df04cddf1c9a1137628adfe",
   "url": "https://github.com/QIFANAI/dsh-startup-yomi/releases/download/v0.3.2/dsh-startup-yomi-0.3.2.tgz",
   "mediaIncluded": false,
   "install": {

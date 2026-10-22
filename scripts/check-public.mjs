@@ -84,7 +84,8 @@ ok('MIT 授权与上游声明完整', () => {
   const license = fs.readFileSync(path.join(ROOT, 'LICENSE'), 'utf8')
   if (!license.includes('MIT License')) throw new Error('缺少 MIT 正文')
   if (!license.includes('original dsh-startup-screen plugin')) throw new Error('缺少上游版权声明')
-  if (!license.includes('derivative work')) throw new Error('缺少派生作品说明')
+  const notice = fs.readFileSync(path.join(ROOT, 'NOTICE'), 'utf8')
+  if (!notice.includes('derivative work')) throw new Error('NOTICE 缺少派生作品说明')
 })
 
 ok('第三方素材被 .gitignore 排除', () => {
