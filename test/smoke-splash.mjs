@@ -283,7 +283,7 @@ ok('设置页注册 id 与插件同名', () => {
 })
 ok('package.json 名称/版本/入口正确', () => {
   assert.equal(pkg.name, 'dsh-startup-yomi')
-  assert.equal(pkg.version, '0.3.2')
+  assert.equal(pkg.version, '0.3.3')
   assert.equal(pkg.main, 'lib/index.js')
   assert.equal(pkg.dsh.client.platform, 'web')
   assert.ok(pkg.dsh.client.inject.includes('@deepseek-ai/dsh-client-ui-settings'))

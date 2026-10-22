@@ -8,7 +8,7 @@
 | 项 | 值 |
 |---|---|
 | 包名 | `dsh-startup-yomi` |
-| 版本 | `0.3.2` |
+| 版本 | `0.3.3` |
 | 中文名 | 黄泉启动序列 |
 | 版本主题 | 由你拾起（主动版） |
 | 插件命名空间 NS | `dsh-startup-yomi` |
@@ -28,7 +28,7 @@
 - 字体：标题用 `"Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", serif`；正文用
   `ui-monospace, "Cascadia Mono", Consolas, monospace`；中文说明用 `"Noto Sans SC", "Microsoft YaHei", sans-serif`。
 - 文字方向：中文大字 + 英文全大写等宽小字。**禁止**出现旧插件的橙色强调色、暖白底、环形准星。
-- 当前布局（0.3.2 沿用 0.3.1 的空间关系）：
+- 当前布局（0.3.3 沿用 0.3.1 的空间关系）：
   - LINK：左侧「由你拾起」碑文，底部中央一枚约 `128–152px` 的可按住核心；核心下方显示小号实时百分比，`HOLD` 保留为无障碍文本。角色母版随蓄能从暗到明显影，右下 `SYNC` 数字、刻线与进度条同步。
   - ECHO：左侧「三道残响」标题；底部中央独立残响谱，三槽进入即全部显示，点击立即填色与序号。
   - REVEAL：左侧以形态名为主标题，`欢迎回来，<身份>` 与称号退为第二层；只显示第二句台词。
@@ -175,7 +175,7 @@
 ## 7. 测试与交付
 
 - `test/smoke-host.mjs`：起最小 fake webServer，断言注入 HTML 含根节点/配置/脚本，
-  版本为 `0.3.2`，路由可用，`hero.mp4` / `hero-loop.mp4` / `hero-loop.webm` Range 与
+  版本为 `0.3.3`，路由可用，`hero.mp4` / `hero-loop.mp4` / `hero-loop.webm` Range 与
   `voice-echo.mp3` / `voice-reveal.mp3` GET 生效，404 优雅。
 - `test/smoke-splash.mjs`：vm + 静态契约，断言 `splash.js` 可编译、创建 DOM、
   API `replay/skip` 存在，**不含 `90000`**，海报永久层、多源回退、SYNC 联动与分段语音存在，

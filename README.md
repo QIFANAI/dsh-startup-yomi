@@ -4,11 +4,11 @@
 [![release](https://img.shields.io/github/v/release/QIFANAI/dsh-startup-yomi)](https://github.com/QIFANAI/dsh-startup-yomi/releases)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-> DeepSeek Harness 的启动序列插件。0.3.2「由你拾起」把主动交回给观看者：
+> DeepSeek Harness 的启动序列插件。0.3.3「由你拾起」把主动交回给观看者：
 > 不是播片，是一枚要按住的核心、三道任意顺序的残响、一个由顺序决定的她。
 > **三道残响，由你拾起。顺序，就是我回来的样子。**
 
-当前版本 **0.3.2**。插件零运行时依赖，web profile 与 DeepSeek Harness Desktop 通用。
+当前版本 **0.3.3**。插件零运行时依赖，web profile 与 DeepSeek Harness Desktop 通用。
 
 ![link](docs/screenshots/link.jpg)
 
@@ -24,36 +24,40 @@
 然后下载安装器，先 dry-run，再安装：
 
 ```powershell
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/QIFANAI/dsh-startup-yomi/v0.3.2/scripts/install.mjs" -OutFile "install-yomi.mjs"
-node install-yomi.mjs --profile desktop --version 0.3.2 --dry-run
-node install-yomi.mjs --profile desktop --version 0.3.2
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/QIFANAI/dsh-startup-yomi/v0.3.3/scripts/install.mjs" -OutFile "install-yomi.mjs"
+node install-yomi.mjs --profile desktop --version 0.3.3 --dry-run
+node install-yomi.mjs --profile desktop --version 0.3.3
 ```
 
 macOS / Linux：
 
 ```bash
-curl -fL "https://raw.githubusercontent.com/QIFANAI/dsh-startup-yomi/v0.3.2/scripts/install.mjs" -o install-yomi.mjs
-node install-yomi.mjs --profile desktop --version 0.3.2 --dry-run
-node install-yomi.mjs --profile desktop --version 0.3.2
+curl -fL "https://raw.githubusercontent.com/QIFANAI/dsh-startup-yomi/v0.3.3/scripts/install.mjs" -o install-yomi.mjs
+node install-yomi.mjs --profile desktop --version 0.3.3 --dry-run
+node install-yomi.mjs --profile desktop --version 0.3.3
 ```
 
 安装器只下载 GitHub Release 资产，不执行远程脚本；它会核对 `release.json`、
 `SHA256SUMS` 与文件大小，再把 tgz 交给 `dsh plugin`。
 
+已验证的 tgz 会缓存到 `~/.dsh/cache/dsh-startup-yomi/`（可用 `--cache` 改目录），
+确保 profile 的 `file:` 依赖在重启、重装与 `pnpm install --offline` 时仍然可解析。
+**不要删除该缓存**，除非先卸载插件。
+
 ### 手动安装
 
 从 [Releases](https://github.com/QIFANAI/dsh-startup-yomi/releases) 下载
-`dsh-startup-yomi-0.3.2.tgz` 与 `SHA256SUMS`，校验后执行：
+`dsh-startup-yomi-0.3.3.tgz` 与 `SHA256SUMS`，校验后执行：
 
 ```bash
-dsh plugin --profile desktop add ./dsh-startup-yomi-0.3.2.tgz
+dsh plugin --profile desktop add ./dsh-startup-yomi-0.3.3.tgz
 dsh plugin --profile desktop list
 ```
 
 web profile 把 `desktop` 换成 `web`。如果终端找不到 `dsh`，用安装器参数
 `--dsh <dsh 可执行文件>` 指定，或把 DSH 的 bin 目录加入 `PATH`。
 
-安装完成后重新启动 DSH。设置页应出现 **设置 → 黄泉启动序列**，顶部版本号为 `0.3.2`。
+安装完成后重新启动 DSH。设置页应出现 **设置 → 黄泉启动序列**，顶部版本号为 `0.3.3`。
 完整步骤与排错见 [INSTALL.md](INSTALL.md)。
 
 ### 从源码安装（开发）
@@ -80,7 +84,7 @@ Host 半侧按文件 mtime 缓存，不需要重新打 tgz。
 npm run build:full
 ```
 
-产物 `releases/dsh-startup-yomi-0.3.2-full.tgz` 只供本机验证与自用，**不要上传**。
+产物 `releases/dsh-startup-yomi-0.3.3-full.tgz` 只供本机验证与自用，**不要上传**。
 素材规格与准备脚本见 [lib/assets/README.md](lib/assets/README.md)。
 
 ## 序列

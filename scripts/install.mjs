@@ -23,7 +23,8 @@ function usage() {
   --allow-unverified      允许安装未校验的本地 tgz
   --dsh <路径>            指定 dsh 可执行文件
   --dry-run               只下载并校验，不安装
-  --keep                  保留下载的 tgz
+  --cache <目录>          下载缓存目录（默认 ~/.dsh/cache/dsh-startup-yomi）
+  --keep                  额外复制一份 tgz 到当前目录
   --remove                卸载插件
   --help                  显示本帮助`)
 }
@@ -39,6 +40,7 @@ function parseArgs(argv) {
     else if (arg === '--allow-unverified') out.allowUnverified = true
     else if (arg === '--dsh') out.dsh = argv[++i]
     else if (arg === '--dry-run') out.dryRun = true
+    else if (arg === '--cache') out.cache = argv[++i]
     else if (arg === '--keep') out.keep = true
     else if (arg === '--remove') out.remove = true
     else if (arg === '--help' || arg === '-h') out.help = true
@@ -168,21 +170,28 @@ async function installRemote(opts) {
     throw new Error('release.json 与 SHA256SUMS 不一致')
   }
 
-  const temp = fs.mkdtempSync(path.join(os.tmpdir(), NAME + '-install-'))
-  const file = path.join(temp, asset.name)
+  const cacheDir = opts.cache
+    ? path.resolve(opts.cache)
+    : path.join(process.env.DSH_HOME || path.join(os.homedir(), '.dsh'), 'cache', NAME)
+  fs.mkdirSync(cacheDir, { recursive: true })
+  const file = path.join(cacheDir, asset.name)
+  const part = file + '.part'
   try {
     console.log(`[..] 下载 ${asset.name} (${release.tag_name || version})`)
-    await download(asset.browser_download_url, file)
-    const size = fs.statSync(file).size
-    const actual = hashFile(file, 'sha256')
+    await download(asset.browser_download_url, part)
+    const size = fs.statSync(part).size
+    const actual = hashFile(part, 'sha256')
     if (actual !== expected.toLowerCase()) {
       throw new Error(`SHA-256 不一致\n  期望 ${expected.toLowerCase()}\n  实际 ${actual}`)
     }
     if (manifest?.size && manifest.size !== size) {
       throw new Error(`文件大小不一致：期望 ${manifest.size}，实际 ${size}`)
     }
+    fs.rmSync(file, { force: true })
+    fs.renameSync(part, file)
     console.log(`[OK] SHA-256 ${actual}`)
     console.log(`     文件 ${size} B`)
+    console.log(`     缓存 ${file}`)
     if (opts.dryRun) {
       console.log('[OK] dry-run：只校验，不安装')
       return
@@ -194,10 +203,10 @@ async function installRemote(opts) {
     if (opts.keep) {
       const keep = path.join(process.cwd(), asset.name)
       fs.copyFileSync(file, keep)
-      console.log('     已保留 ' + keep)
+      console.log('     已复制 ' + keep)
     }
   } finally {
-    fs.rmSync(temp, { recursive: true, force: true })
+    fs.rmSync(part, { force: true })
   }
 }
 

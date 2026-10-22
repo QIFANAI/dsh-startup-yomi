@@ -1,6 +1,6 @@
 # 安装 / 升级 / 卸载 / 排错
 
-> 适用版本 **0.3.2**。安装包与校验值以 [Releases](https://github.com/QIFANAI/dsh-startup-yomi/releases) 为准。
+> 适用版本 **0.3.3**。安装包与校验值以 [Releases](https://github.com/QIFANAI/dsh-startup-yomi/releases) 为准。
 
 ## 0. 前置
 
@@ -17,35 +17,37 @@
 ### 1.1 安装器
 
 ```bash
-node scripts/install.mjs --profile desktop --version 0.3.2 --dry-run
-node scripts/install.mjs --profile desktop --version 0.3.2
+node scripts/install.mjs --profile desktop --version 0.3.3 --dry-run
+node scripts/install.mjs --profile desktop --version 0.3.3
 ```
 
 如果还没克隆仓库，先下载安装器：
 
 ```powershell
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/QIFANAI/dsh-startup-yomi/v0.3.2/scripts/install.mjs" -OutFile "install-yomi.mjs"
-node install-yomi.mjs --profile desktop --version 0.3.2 --dry-run
-node install-yomi.mjs --profile desktop --version 0.3.2
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/QIFANAI/dsh-startup-yomi/v0.3.3/scripts/install.mjs" -OutFile "install-yomi.mjs"
+node install-yomi.mjs --profile desktop --version 0.3.3 --dry-run
+node install-yomi.mjs --profile desktop --version 0.3.3
 ```
 
 安装器会：
 
 1. 读取 GitHub Release 的 `release.json` 与 `SHA256SUMS`；
-2. 下载 `dsh-startup-yomi-0.3.2.tgz`；
+2. 下载 `dsh-startup-yomi-0.3.3.tgz`；
 3. 校验 SHA-256 与文件大小；
 4. 调用 `dsh plugin --profile <profile> add <tgz>`。
 
-`--dry-run` 只下载与校验，不安装。`--keep` 保留 tgz。找不到 `dsh` 时用
+`--dry-run` 只下载与校验，不安装。`--keep` 会额外复制一份 tgz 到当前目录。
+已验证的 tgz 缓存在 `~/.dsh/cache/dsh-startup-yomi/`，可用 `--cache <目录>` 改位置；
+这个缓存必须保留，否则 profile 的 `file:` 依赖会在重装时失效。找不到 `dsh` 时用
 `--dsh <路径>` 指定。web profile 把 `desktop` 换成 `web`。
 
 ### 1.2 手动安装
 
-1. 从 Release 下载 `dsh-startup-yomi-0.3.2.tgz`、`SHA256SUMS`、`release.json`。
+1. 从 Release 下载 `dsh-startup-yomi-0.3.3.tgz`、`SHA256SUMS`、`release.json`。
 2. 校验：
 
 ```powershell
-(Get-FileHash .\dsh-startup-yomi-0.3.2.tgz -Algorithm SHA256).Hash.ToLower()
+(Get-FileHash .\dsh-startup-yomi-0.3.3.tgz -Algorithm SHA256).Hash.ToLower()
 Get-Content .\SHA256SUMS
 ```
 
@@ -56,7 +58,7 @@ sha256sum -c SHA256SUMS
 3. 安装并确认：
 
 ```bash
-dsh plugin --profile desktop add ./dsh-startup-yomi-0.3.2.tgz
+dsh plugin --profile desktop add ./dsh-startup-yomi-0.3.3.tgz
 dsh plugin --profile desktop list
 ```
 
@@ -66,8 +68,8 @@ dsh plugin --profile desktop list
 
 官方 Release 资产对所有用户是同一份文件：
 
-- 版本：`0.3.2`
-- 包名：`dsh-startup-yomi-0.3.2.tgz`
+- 版本：`0.3.3`
+- 包名：`dsh-startup-yomi-0.3.3.tgz`
 - 文件清单与 SHA-256 由 `release.json`、`SHA256SUMS` 固定；
 - 包内不包含第三方声画素材，见 [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)。
 
@@ -91,7 +93,7 @@ dsh plugin --profile desktop add link:E:\path\to\dsh-startup-yomi
 改完 `lib/splash.js`、`lib/splash.css`、`lib/client.js` 后刷新页面即可；
 Host 半侧按文件 mtime 缓存，不需要重新打 tgz。
 
-## 3. 验证（0.3.2）
+## 3. 验证（0.3.3）
 
 - 启动时黑场约 1 秒 → 母版从虚焦里浮出；
 - 左侧主标题为 **「由你拾起」**，底部中央只有一枚小核心；
@@ -101,7 +103,7 @@ Host 半侧按文件 mtime 缓存，不需要重新打 tgz。
 - 揭幕大标题为形态名（溯名者 / 执灯者 / 归雷者 / 拾忆者 / 问名者 / 余响者），
   `欢迎回来，<身份>` 在第二行；
 - Esc 或右上 SKIP 可跳过；
-- 设置页顶部版本号应为 `0.3.2`。
+- 设置页顶部版本号应为 `0.3.3`。
 
 没有素材时，以上流程仍完整；只是人物视频、BGM 与两段语音会走降级链。
 若需完整声画，按 [lib/assets/README.md](lib/assets/README.md) 放入你有权使用的素材，

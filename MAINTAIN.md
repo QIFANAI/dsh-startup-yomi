@@ -55,6 +55,8 @@ node scripts/install.mjs --profile desktop --version <ver> --dry-run
 - 文件 mtime 统一为 1985-10-26，npm 打包时排序固定；
 - Release 工作流固定使用 npm 11.19.0，与本地生成 `release.json` 的环境一致；
 - CI 重建后必须与 `release.json` 的 `size` 与 `sha256` 完全一致，否则失败。
+- 远端安装器把 tgz 缓存在 `~/.dsh/cache/dsh-startup-yomi/`；发布验收必须包含
+  `pnpm install --offline`，确认缓存路径在安装后仍可解析。
 
 本地若 npm 版本不同，先执行 `npm install -g npm@11.19.0` 再写 manifest。
 
