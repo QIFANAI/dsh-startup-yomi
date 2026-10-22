@@ -1,0 +1,38 @@
+# 依赖与构建产物
+node_modules/
+releases/
+_shots/
+_edgetmp*/
+_tmp_*/
+_tmp_*
+__pycache__/
+*.pyc
+*.log
+
+# 本地归档、开工留痕与项目卡（不进公开仓库）
+_旧版本归档_*/
+_旧版本归档_*.zip
+_开工简报*
+_项目卡.md
+_install-verify-*.txt
+
+# 第三方声画素材：本地自备，不入库（版权见 THIRD-PARTY-NOTICES.md）
+lib/assets/*.mp4
+lib/assets/*.webm
+lib/assets/*.mp3
+lib/assets/*.wav
+lib/assets/*.woff2
+lib/assets/*.jpg
+lib/assets/*.jpeg
+lib/assets/*.png
+!lib/assets/README.md
+
+# 系统、编辑器与本地配置
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.code-workspace
+.env
+.env.*
+.npmrc

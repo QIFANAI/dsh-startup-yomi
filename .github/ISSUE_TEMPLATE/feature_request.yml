@@ -1,0 +1,30 @@
+name: 功能建议
+description: 交互、视觉、配置或安装体验建议
+title: "[feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 想解决什么问题
+      description: 先描述场景，不要只给方案。
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 建议方案
+    validations:
+      required: true
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: 可能的代价
+      description: 例如与六种形态、无障碍、素材降级链的冲突。
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: 范围确认
+      options:
+        - label: 这个建议不要求提交未授权的第三方素材
+          required: true

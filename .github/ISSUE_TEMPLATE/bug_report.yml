@@ -1,0 +1,68 @@
+name: Bug 报告
+description: 启动序列、安装、设置页或声画降级异常
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请先确认已完全退出 DSH 再安装，并阅读 INSTALL.md 的排错表。
+        不要粘贴 token、完整用户目录或未脱敏日志。
+  - type: input
+    id: plugin_version
+    attributes:
+      label: 插件版本
+      placeholder: 0.3.2
+    validations:
+      required: true
+  - type: input
+    id: dsh_version
+    attributes:
+      label: DSH 版本与 profile
+      placeholder: 0.2.1-rc.2 / desktop
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: 系统与浏览器/Electron
+      placeholder: Windows 11 / Edge 版本
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: 安装方式
+      options:
+        - GitHub Release tgz
+        - 源码 link:
+        - 其他
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望行为
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际行为与复现步骤
+      description: 请写清点了哪几枚残响、顺序、是否带素材。
+    validations:
+      required: true
+  - type: textarea
+    id: check
+    attributes:
+      label: 已做检查
+      placeholder: dsh plugin list / 设置页版本 / 控制台错误 / 是否完全退出 DSH
+  - type: checkboxes
+    id: confirms
+    attributes:
+      label: 确认
+      options:
+        - label: 我已删除或脱敏本机路径、token 与个人信息
+          required: true
+        - label: 我已阅读 INSTALL.md 的排错表
+          required: true

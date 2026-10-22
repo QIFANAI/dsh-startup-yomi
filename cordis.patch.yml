@@ -1,0 +1,12 @@
+# dsh-startup-yomi — DSH bundle patch
+#
+# 把插件 Host 半侧挂进当前 profile 的配置树；浏览器半侧由 dsh.client 声明，
+# 宿主按 package.json 的 dsh.client 自动组装 bundle，这里不写。
+#
+# Release 安装：
+#   dsh plugin --profile web add dsh-startup-yomi-0.3.2.tgz
+# 本地开发安装（路径换成你的克隆目录）：
+#   dsh plugin --profile web add link:/absolute/path/to/dsh-startup-yomi
+- insert:
+    - id: dsh-startup-yomi
+      name: dsh-startup-yomi

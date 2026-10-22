@@ -1,0 +1,68 @@
+{
+  "name": "dsh-startup-yomi",
+  "version": "0.3.2",
+  "description": "DeepSeek Harness 启动序列「黄泉启动序列」· 0.3.2 由你拾起主动版：暗色紫蓝雷暴母版、可按住核心、三道任意顺序残响决定六种形态；两段独立语音，设置页 18 项可调。零运行时依赖，web profile 与桌面端通用。",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "deepseek-harness-desktop",
+    "startup",
+    "splash",
+    "boot-animation",
+    "yomi"
+  ],
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "test",
+    "preview",
+    "docs",
+    "README.md",
+    "INSTALL.md",
+    "MAINTAIN.md",
+    "SPEC.md",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "THIRD-PARTY-NOTICES.md",
+    "cordis.patch.yml"
+  ],
+  "scripts": {
+    "test": "node test/smoke-host.mjs && node test/smoke-splash.mjs",
+    "check": "node scripts/check-public.mjs",
+    "build": "node scripts/build-release.mjs --mode source",
+    "build:full": "node scripts/build-release.mjs --mode full",
+    "verify:release": "node scripts/build-release.mjs --mode source --verify-manifest",
+    "install:plugin": "node scripts/install.mjs"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-settings"
+      ],
+      "platform": "web"
+    }
+  },
+  "author": "沈宏宏 / dsh-startup-yomi contributors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QIFANAI/dsh-startup-yomi.git"
+  },
+  "homepage": "https://github.com/QIFANAI/dsh-startup-yomi#readme",
+  "bugs": {
+    "url": "https://github.com/QIFANAI/dsh-startup-yomi/issues"
+  }
+}

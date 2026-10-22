@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dsh-startup-yomi · 预览</title>
+<script>
+  /* 同一份预览页在两处都能用：
+     · 双击本地文件（file://）→ 资源走 ../lib/
+     · DSH 路由 /dsh-yomi/preview（http://）→ 资源走 /dsh-yomi/ */
+  (function () {
+    var isFile = location.protocol === 'file:'
+    window.__DSH_YOMI_LIB_BASE__ = isFile ? '../lib/' : '/dsh-yomi/'
+    document.write('<link rel="stylesheet" href="' + window.__DSH_YOMI_LIB_BASE__ + 'splash.css">')
+  })()
+</script>
+<style>
+  html, body { margin: 0; height: 100%; background: #030208; }
+  body { overflow: hidden; }
+  .pv-controls {
+    position: fixed;
+    left: 14px;
+    bottom: 14px;
+    z-index: 2147483001;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 10px;
+    font: 11px/1.4 ui-monospace, Consolas, monospace;
+    color: rgba(240, 235, 245, 0.7);
+    background: rgba(8, 4, 16, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    backdrop-filter: blur(8px);
+  }
+  .pv-controls[hidden] { display: none; }
+  .pv-controls a, .pv-controls button {
+    appearance: none;
+    font: inherit;
+    color: rgba(245, 235, 248, 0.78);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+    padding: 4px 8px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .pv-controls a:hover, .pv-controls button:hover {
+    border-color: #ff2d55;
+    color: #fff;
+  }
+  .pv-controls .pv-hint { opacity: 0.5; letter-spacing: 0.08em; }
+</style>
+</head>
+<body>
+  <!-- 预览页：无宿主也能跑。素材来自 lib/assets/，缺失时自动走程序化背景。 -->
+  <div id="dsh-yomi-root"></div>
+
+  <div class="pv-controls" id="pvControls">
+    <span class="pv-hint">预览</span>
+    <a href="?phase=link">link</a>
+    <a href="?phase=link&charge=0.62">蓄能中</a>
+    <a href="?phase=echo">echo</a>
+    <a href="?phase=echo&echo=2">echo 2/3</a>
+    <a href="?phase=sync">sync</a>
+    <a href="?phase=reveal">reveal</a>
+    <a href="?phase=reveal&order=1-2-3">溯名者</a>
+    <a href="?phase=reveal&order=1-3-2">执灯者</a>
+    <a href="?phase=reveal&order=2-1-3">归雷者</a>
+    <a href="?phase=reveal&order=2-3-1">拾忆者</a>
+    <a href="?phase=reveal&order=3-1-2">问名者</a>
+    <a href="?phase=reveal&order=3-2-1">余响者</a>
+    <a href="?">完整序列</a>
+    <a href="?novideo=1&nobgm=1">无素材</a>
+    <a href="?reduced=1">减弱动态</a>
+    <button type="button" id="pvSkip">跳过</button>
+  </div>
+
+  <script>
+  (function () {
+    var q = new URLSearchParams(location.search)
+    var isFile = location.protocol === 'file:'
+    window.__DSH_YOMI_ASSET_BASE__ = isFile ? '../lib/assets/' : '/dsh-yomi/asset/'
+    window.__DSH_YOMI_PREVIEW_PHASE__ = q.get('phase') || ''
+    window.__DSH_YOMI_PREVIEW_CHARGE__ = q.get('charge') == null ? -1 : Number(q.get('charge'))
+    window.__DSH_YOMI_PREVIEW_ECHO__ = q.get('echo') == null ? 0 : Number(q.get('echo'))
+    window.__DSH_YOMI_PREVIEW_ORDER__ = q.get('order') || ''
+    /* 截图工具用：headless 环境可能默认 prefers-reduced-motion: reduce，
+       ?motion=1 强制按完整动效渲染，避免验收截图看不到动画。 */
+    window.__DSH_YOMI_FORCE_MOTION__ = q.get('motion') === '1'
+    window.__DSH_YOMI__ = {
+      enabled: true,
+      mode: 'always',
+      speed: Number(q.get('speed') || 1),
+      interaction: q.get('interaction') || 'full',
+      allowSkip: true,
+      identity: q.get('identity') || 'MEMORY_07',
+      rank: q.get('rank') || '雷鸣的残响',
+      fragments: q.get('fragments') || '雷声之前|她曾在此|名字已归还',
+      colorA: q.get('a') || '#ff2d55',
+      colorB: q.get('b') || '#7a5cff',
+      video: q.get('novideo') !== '1',
+      bgm: q.get('nobgm') !== '1',
+      bgmVolume: Number(q.get('vol') || 0.35),
+      sfx: q.get('nosfx') !== '1',
+      sfxVolume: 0.6,
+      scanlines: q.get('noscan') !== '1',
+      reducedMotion: q.get('reduced') === '1' || q.get('reduced') === '0' ? q.get('reduced') === '1' : false,
+      glitch: Number(q.get('glitch') || 0.6)
+    }
+  })()
+  </script>
+
+  <script>
+  (function () {
+    var s = document.createElement('script')
+    s.src = window.__DSH_YOMI_LIB_BASE__ + 'splash.js'
+    document.body.appendChild(s)
+    if (new URLSearchParams(location.search).get('clean') === '1') {
+      document.getElementById('pvControls').hidden = true
+    }
+    document.getElementById('pvSkip').addEventListener('click', function () {
+      if (window.__DSH_YOMI_API__) window.__DSH_YOMI_API__.skip()
+    })
+  })()
+  </script>
+</body>
+</html>
