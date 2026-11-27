@@ -283,7 +283,7 @@ ok('设置页注册 id 与插件同名', () => {
 })
 ok('package.json 名称/版本/入口正确', () => {
   assert.equal(pkg.name, 'dsh-startup-yomi')
-  assert.equal(pkg.version, '0.3.3')
+  assert.equal(pkg.version, '0.3.4')
   assert.equal(pkg.main, 'lib/index.js')
   assert.equal(pkg.dsh.client.platform, 'web')
   assert.ok(pkg.dsh.client.inject.includes('@deepseek-ai/dsh-client-ui-settings'))
@@ -345,9 +345,9 @@ for (const rel of ['lib/assets/voice-echo.mp3', 'lib/assets/voice-reveal.mp3']) 
     assert.ok(id3 || sync, '既不是 ID3 也不是 MPEG 帧同步：' + head.toString('hex'))
   })
 }
-ok('assets/README.md 说明了素材来源与不入库', () => {
+ok('assets/README.md 说明了素材随仓库发布与权利边界', () => {
   const md = read('lib/assets/README.md')
-  assert.match(md, /不入库|不随仓库|本地/)
+  assert.match(md, /随仓库|权利|再分发/)
 })
 
 if (failures.length) {

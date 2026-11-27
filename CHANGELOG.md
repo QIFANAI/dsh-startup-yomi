@@ -2,6 +2,20 @@
 
 只记「改了什么 + 为什么 + 怎么验证」。
 
+## 0.3.4 · 2026-11-27 · 完整素材开源版
+
+- 仓库与官方 Release 改为**完整声画开源**：`hero-loop.mp4` / `hero-loop.webm` /
+  `hero.mp4` / `hero-poster.jpg` / `bgm.mp3` / `voice-echo.mp3` / `voice-reveal.mp3`
+  随仓库提交，与维护者本机完整包逐字节一致；
+- `.gitignore` 不再排除 `lib/assets/*`；`check-public` 移除「未跟踪媒体」门禁；
+  `build-release` 的 source 包改为必须包含全部素材，`release.json` 声明
+  `mediaIncluded=true`；
+- README / INSTALL / SPEC / NOTICE / THIRD-PARTY-NOTICES / `lib/assets/README.md`
+  同步为完整开源口径：素材权利归各自权利人，代码 MIT 不覆盖素材；
+- 素材缺失时的 Canvas + WebAudio 降级链保持不变，无素材环境仍可运行；
+- 验证：`npm test`（39 + 145）、`npm run check`、`npm run build -- --write-manifest`，
+  并对远端文件做逐字节哈希比对。
+
 ## 0.3.3 · 2026-10-22
 
 - 修复安装器把 tgz 放在临时目录、安装后临时目录被清理导致 profile 的 `file:`

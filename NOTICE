@@ -7,5 +7,5 @@ Copyright (c) 2026 dsh-startup-yomi contributors (modifications)
 本仓库是 dsh-startup-screen 的修改版（derivative work）。原始版本由沈宏宏以
 MIT 许可证发布；本仓库保留其版权声明并继续修改。
 
-代码采用 MIT。仓库与官方 Release 不包含原片台词、第三方角色视频、商业 BGM
-或其他未授权素材，相关边界见 THIRD-PARTY-NOTICES.md。
+代码采用 MIT。仓库与官方 Release 随附角色视频、BGM 与揭幕语音等第三方素材，
+这些素材不在 MIT 授权范围内，权利归各自权利人；再分发边界见 THIRD-PARTY-NOTICES.md。

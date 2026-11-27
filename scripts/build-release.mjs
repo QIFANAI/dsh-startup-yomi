@@ -2,8 +2,8 @@
 /**
  * 构建可复现的发布包。
  *
- * source 模式只复制 git 已跟踪文件，因此第三方声画素材即使躺在工作区，
- * 也不会混进公开 Release；full 模式供维护者本地验证完整声画，产物带 -full 后缀。
+ * source 模式复制 git 已跟踪文件；自 0.3.4 起仓库本身包含完整声画素材，
+ * 公开 Release 即完整版。full 模式保留作兼容，从工作区 files 白名单重建 -full 包。
  */
 import { execFileSync } from 'node:child_process'
 import crypto from 'node:crypto'
@@ -114,7 +114,7 @@ function normalizeRelease(manifest) {
     sha256: manifest.sha256,
     sha512: manifest.sha512,
     url: `https://github.com/${REPO}/releases/download/v${VERSION}/${NAME}-${VERSION}.tgz`,
-    mediaIncluded: false,
+    mediaIncluded: true,
     install: {
       node: PKG.engines?.node || '>=20',
       profiles: ['desktop', 'web'],
@@ -122,21 +122,19 @@ function normalizeRelease(manifest) {
   }
 }
 
-function assertSourceHasNoMedia(files) {
-  const media = files
-    .map((file) => file.path)
-    .filter((file) => /^lib\/assets\/.+\.(?:mp4|webm|mp3|wav|jpg|jpeg|png|woff2)$/i.test(file))
-  if (media.length) {
-    throw new Error('source 包混入第三方素材: ' + media.join(', '))
-  }
+function assertHasMedia(files) {
+  const missing = MEDIA.filter(
+    (file) => !files.some((entry) => entry.path === 'lib/assets/' + file)
+  )
+  if (missing.length) throw new Error('发布包缺少声画素材: ' + missing.join(', '))
 }
 
 function main() {
   const opts = parseArgs(process.argv.slice(2))
   if (opts.help) {
     console.log(`用法: node scripts/build-release.mjs [--mode source|full] [--write-manifest] [--verify-manifest]`)
-    console.log('  source  只打包 git 已跟踪文件（公开 Release 用）')
-    console.log('  full    打包当前工作区的完整声画（只在本机验证，不要上传）')
+    console.log('  source  打包 git 已跟踪文件（公开 Release 用，含完整声画素材）')
+    console.log('  full    从工作区 files 白名单重建 -full 包（兼容保留）')
     return
   }
 
@@ -160,11 +158,7 @@ function main() {
       : `${NAME}-${VERSION}-full.tgz`
     const target = path.join(outDir, targetName)
 
-    if (opts.mode === 'source') assertSourceHasNoMedia(info.files)
-    const expectedFull = MEDIA.every((file) => info.files.some((entry) => entry.path === 'lib/assets/' + file))
-    if (opts.mode === 'full' && !expectedFull) {
-      throw new Error('full 包缺少声画素材；先用 scripts/prepare-assets.py 准备 lib/assets')
-    }
+    assertHasMedia(info.files)
 
     fs.rmSync(target, { force: true })
     if (path.resolve(generated) !== path.resolve(target)) {
@@ -218,7 +212,6 @@ function main() {
       console.log(`[OK] ${path.relative(ROOT, target)}`)
       console.log(`  ${size} B / ${info.files.length} files`)
       console.log(`  sha256 ${sha256}`)
-      if (opts.mode === 'full') console.log('  full 包含第三方声画，只许本机使用，禁止上传')
     }
   } finally {
     fs.rmSync(stage, { recursive: true, force: true })

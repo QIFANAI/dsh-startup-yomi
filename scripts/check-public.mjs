@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * 公开仓库门禁：个人路径、私有归档、未授权媒体、版本漂移、断链。
+ * 公开仓库门禁：个人路径、私有归档、版本漂移、断链。
+ * 素材随仓库完整发布（v0.3.4 起），不再检查"未跟踪媒体"。
  * 需要 git 索引；CI 在 checkout 后执行。
  */
 import { execFileSync } from 'node:child_process'
@@ -40,7 +41,6 @@ const privatePatterns = [
   [/_开工简报/, '开工简报'],
   [/_install-verify-/, '本地安装验收记录'],
 ]
-const mediaPattern = /^lib\/assets\/.+\.(?:mp4|webm|mp3|wav|jpg|jpeg|png|woff2)$/i
 
 ok('没有把本机路径写进公开文件', () => {
   for (const file of textFiles) {
@@ -49,11 +49,6 @@ ok('没有把本机路径写进公开文件', () => {
       if (pattern.test(content)) throw new Error(`${file} 命中 ${label}`)
     }
   }
-})
-
-ok('没有跟踪第三方声画素材', () => {
-  const found = tracked.filter((file) => mediaPattern.test(file))
-  if (found.length) throw new Error(found.join(', '))
 })
 
 ok('版本号在 package / release / 测试之间一致', () => {
@@ -77,7 +72,7 @@ ok('package.json 指向公开仓库与 Release', () => {
   if (manifest.url !== `https://github.com/QIFANAI/dsh-startup-yomi/releases/download/${manifest.tag}/${manifest.asset}`) {
     throw new Error('release.json 下载地址不正确')
   }
-  if (manifest.mediaIncluded !== false) throw new Error('release.json 必须声明 mediaIncluded=false')
+  if (manifest.mediaIncluded !== true) throw new Error('release.json 必须声明 mediaIncluded=true')
 })
 
 ok('MIT 授权与上游声明完整', () => {
@@ -86,13 +81,6 @@ ok('MIT 授权与上游声明完整', () => {
   if (!license.includes('original dsh-startup-screen plugin')) throw new Error('缺少上游版权声明')
   const notice = fs.readFileSync(path.join(ROOT, 'NOTICE'), 'utf8')
   if (!notice.includes('derivative work')) throw new Error('NOTICE 缺少派生作品说明')
-})
-
-ok('第三方素材被 .gitignore 排除', () => {
-  const ignore = fs.readFileSync(path.join(ROOT, '.gitignore'), 'utf8')
-  for (const pattern of ['lib/assets/*.mp4', 'lib/assets/*.mp3', '!lib/assets/README.md']) {
-    if (!ignore.includes(pattern)) throw new Error('缺少规则 ' + pattern)
-  }
 })
 
 ok('Markdown 本地链接都能解析', () => {

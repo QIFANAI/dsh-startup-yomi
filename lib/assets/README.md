@@ -1,7 +1,7 @@
-# 本地素材（不入库）
+# 声画素材（随仓库发布）
 
-`lib/assets/` 里的大文件是**本地可选素材**，默认不随仓库或官方 Release 分发。
-官方包没有它们时，插件仍会完整走 Canvas + WebAudio 降级链，不报错、不中断。
+`lib/assets/` 里的文件随仓库与官方 Release 完整发布，安装后即获得完整观感。
+文件缺失或解码失败时，插件仍会完整走 Canvas + WebAudio 降级链，不报错、不中断。
 
 | 文件 | 必需 | 说明 |
 |---|---|---|
@@ -43,7 +43,7 @@ python scripts/prepare-assets.py \
 - `voice-echo.mp3` / `voice-reveal.mp3` 取不到 → 对应那句静默，BGM 恢复，不报错；
 - `bgm.mp3` / `sfx-charge.mp3` / `font-brush.woff2` 缺失 → 对应能力静默降级，不报错。
 
-## 为什么不入库
+## 素材权利与再分发
 
-体积大，且可能涉及第三方版权。`.gitignore` 排除了
-`lib/assets/*.{mp4,webm,jpg,jpeg,png,mp3,wav,woff2}`，只保留本 README。
+这些文件的权利归各自权利人所有，代码的 MIT 授权不覆盖它们。再分发、商用或公开演示前
+请自行确认授权；权威声明见仓库根目录 [THIRD-PARTY-NOTICES.md](../../THIRD-PARTY-NOTICES.md)。

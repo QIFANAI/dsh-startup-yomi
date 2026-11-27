@@ -4,11 +4,12 @@
 [![release](https://img.shields.io/github/v/release/QIFANAI/dsh-startup-yomi)](https://github.com/QIFANAI/dsh-startup-yomi/releases)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-> DeepSeek Harness 的启动序列插件。0.3.3「由你拾起」把主动交回给观看者：
+> DeepSeek Harness 的启动序列插件。0.3.4「由你拾起」把主动交回给观看者：
 > 不是播片，是一枚要按住的核心、三道任意顺序的残响、一个由顺序决定的她。
 > **三道残响，由你拾起。顺序，就是我回来的样子。**
 
-当前版本 **0.3.3**。插件零运行时依赖，web profile 与 DeepSeek Harness Desktop 通用。
+当前版本 **0.3.4**。插件零运行时依赖，web profile 与 DeepSeek Harness Desktop 通用。
+自 0.3.4 起，仓库与官方 Release 均包含完整声画素材（角色母版、BGM 与两段揭幕语音）。
 
 ![link](docs/screenshots/link.jpg)
 
@@ -24,17 +25,17 @@
 然后下载安装器，先 dry-run，再安装：
 
 ```powershell
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/QIFANAI/dsh-startup-yomi/v0.3.3/scripts/install.mjs" -OutFile "install-yomi.mjs"
-node install-yomi.mjs --profile desktop --version 0.3.3 --dry-run
-node install-yomi.mjs --profile desktop --version 0.3.3
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/QIFANAI/dsh-startup-yomi/v0.3.4/scripts/install.mjs" -OutFile "install-yomi.mjs"
+node install-yomi.mjs --profile desktop --version 0.3.4 --dry-run
+node install-yomi.mjs --profile desktop --version 0.3.4
 ```
 
 macOS / Linux：
 
 ```bash
-curl -fL "https://raw.githubusercontent.com/QIFANAI/dsh-startup-yomi/v0.3.3/scripts/install.mjs" -o install-yomi.mjs
-node install-yomi.mjs --profile desktop --version 0.3.3 --dry-run
-node install-yomi.mjs --profile desktop --version 0.3.3
+curl -fL "https://raw.githubusercontent.com/QIFANAI/dsh-startup-yomi/v0.3.4/scripts/install.mjs" -o install-yomi.mjs
+node install-yomi.mjs --profile desktop --version 0.3.4 --dry-run
+node install-yomi.mjs --profile desktop --version 0.3.4
 ```
 
 安装器只下载 GitHub Release 资产，不执行远程脚本；它会核对 `release.json`、
@@ -47,17 +48,17 @@ node install-yomi.mjs --profile desktop --version 0.3.3
 ### 手动安装
 
 从 [Releases](https://github.com/QIFANAI/dsh-startup-yomi/releases) 下载
-`dsh-startup-yomi-0.3.3.tgz` 与 `SHA256SUMS`，校验后执行：
+`dsh-startup-yomi-0.3.4.tgz` 与 `SHA256SUMS`，校验后执行：
 
 ```bash
-dsh plugin --profile desktop add ./dsh-startup-yomi-0.3.3.tgz
+dsh plugin --profile desktop add ./dsh-startup-yomi-0.3.4.tgz
 dsh plugin --profile desktop list
 ```
 
 web profile 把 `desktop` 换成 `web`。如果终端找不到 `dsh`，用安装器参数
 `--dsh <dsh 可执行文件>` 指定，或把 DSH 的 bin 目录加入 `PATH`。
 
-安装完成后重新启动 DSH。设置页应出现 **设置 → 黄泉启动序列**，顶部版本号为 `0.3.3`。
+安装完成后重新启动 DSH。设置页应出现 **设置 → 黄泉启动序列**，顶部版本号为 `0.3.4`。
 完整步骤与排错见 [INSTALL.md](INSTALL.md)。
 
 ### 从源码安装（开发）
@@ -74,18 +75,12 @@ Host 半侧按文件 mtime 缓存，不需要重新打 tgz。
 
 ## 安装结果与声画素材
 
-官方 Release 的**插件代码与安装包对所有用户逐字节一致**：同一版本、同一文件清单、
-同一 SHA-256。第三方角色视频、商业 BGM 与揭幕语音因授权边界**不随仓库或官方 Release
-分发**，所以官方包默认走 Canvas + WebAudio 的完整降级链，不会缺功能、不会报错。
+官方 Release 的**插件代码与完整声画素材对所有用户逐字节一致**：同一版本、同一文件清单、
+同一 SHA-256。仓库与 Release 均包含角色母版、BGM 与两段揭幕语音，安装后即是完整观感；
+素材缺失或解码失败时仍自动走 Canvas + WebAudio 降级链，不会缺功能、不会报错。
 
-如果你有权使用相应素材，把它们放进 `lib/assets/`，再执行：
-
-```bash
-npm run build:full
-```
-
-产物 `releases/dsh-startup-yomi-0.3.3-full.tgz` 只供本机验证与自用，**不要上传**。
-素材规格与准备脚本见 [lib/assets/README.md](lib/assets/README.md)。
+素材规格见 [lib/assets/README.md](lib/assets/README.md)；权利归属与再分发边界见
+[THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)。
 
 ## 序列
 
@@ -154,14 +149,14 @@ npm run build:full
 
 ```bash
 npm test                  # 宿主路由 + 浏览器侧契约
-npm run check             # 公开仓库门禁：隐私路径、媒体、版本、断链
-npm run build             # 可复现 source 包 → releases/
-npm run build:full        # 本机完整声画包（不要上传）
+npm run check             # 公开仓库门禁：隐私路径、版本、断链
+npm run build             # 可复现 source 包 → releases/（含完整素材）
+npm run build:full        # 兼容保留：从工作区完整素材重建 -full 包
 npm run verify:release    # 重建 source 包并与 release.json 比对
 ```
 
-干净克隆没有第三方素材时，测试会跳过素材相关用例（`smoke-host` 29 项、
-`smoke-splash` 133 项）；本机带素材时是 39 + 145 项。两者都必须 PASS。
+仓库自带完整素材时，测试为 `smoke-host` 39 项、`smoke-splash` 145 项；素材缺失时
+自动跳过素材相关用例（29 + 133 项）。两种环境都必须 PASS。
 
 独立预览：直接双击 `preview/index.html`，或访问 `/dsh-yomi/preview`。
 `?phase=link|echo|reveal` 可停在某一幕，`?novideo=1` 验证无素材回落，
@@ -182,7 +177,7 @@ npm run verify:release    # 重建 source 包并与 release.json 比对
 
 ## 素材、商标与致谢
 
-- 代码 MIT；影音素材不随仓库或官方 Release 分发，边界见 [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)。
+- 代码 MIT；声画素材随仓库与 Release 发布，权利归各自权利人，再分发边界见 [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)。
 - 本项目是社区作品，与 DeepSeek / 深度求索无隶属关系，未获官方背书。
 - 上游插件 `dsh-startup-screen` 由 **沈宏宏** 以 MIT 发布；本仓库保留原始版权声明并继续修改。
 

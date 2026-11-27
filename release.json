@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "name": "dsh-startup-yomi",
-  "version": "0.3.3",
-  "tag": "v0.3.3",
-  "asset": "dsh-startup-yomi-0.3.3.tgz",
-  "size": 565851,
-  "sha256": "60d491445686b25bd1fdd7b0e7efd15bf1b4eb8679d42f65c7d2bc946ffafe07",
-  "sha512": "27dcecb770d9675431483b80cb86d7ed59eba3dc11f17896319ccad69ade6ce199844e1784b94e2a7e96cbaca80779ff3a81b09bdd65cb6b623e93adbe556a51",
-  "url": "https://github.com/QIFANAI/dsh-startup-yomi/releases/download/v0.3.3/dsh-startup-yomi-0.3.3.tgz",
-  "mediaIncluded": false,
+  "version": "0.3.4",
+  "tag": "v0.3.4",
+  "asset": "dsh-startup-yomi-0.3.4.tgz",
+  "size": 35844714,
+  "sha256": "9d331e950fb3f12410c403f337e8501fd09209bf9b04211500de181031a6fa24",
+  "sha512": "6874bd93173383a50dbdf5a879e885f8703217e2dc4cf520ae07e39115774273189837d09831591f6e80817d2ec5532236dbee15f11f1d3ec4f1c23b8f0c10db",
+  "url": "https://github.com/QIFANAI/dsh-startup-yomi/releases/download/v0.3.4/dsh-startup-yomi-0.3.4.tgz",
+  "mediaIncluded": true,
   "install": {
     "node": ">=20",
     "profiles": [
